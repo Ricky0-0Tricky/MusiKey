@@ -1,3 +1,4 @@
+from input.stop_timer import StopTimer
 from pynput import keyboard
 
 class Piano:
@@ -15,6 +16,8 @@ class Piano:
         """
         # Initializes the Keyboard Thread
         self.keyboard = keyboard.Listener(on_press=self.on_press)
+        # Initializes the StopTimer
+        self.stop_timer = StopTimer(self.media_player)
 
     def start_listening(self):
         """ 
@@ -48,4 +51,5 @@ class Piano:
             # Checks if Music is playing
             # TODO: Check if the Track is Playing and act on it 
             self.old_key = key 
-        pass
+            # Reset inactivity timer on every press 
+            self.stop_timer.start_stop_timer()
