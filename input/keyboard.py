@@ -1,3 +1,5 @@
+from pynput import keyboard
+
 class Piano:
     """ 
     A Simple 'Piano' that, in turn, represents 
@@ -11,7 +13,8 @@ class Piano:
         
         :param self: Piano Object
         """
-        pass
+        # Initializes the Keyboard Thread
+        self.keyboard = keyboard.Listener(on_press=self.on_press)
 
     def start_listening(self):
         """ 
@@ -19,7 +22,9 @@ class Piano:
 
         :param self: Piano Object
         """
-        pass
+        # Declares a Keyboard Thread and starts it
+        self.keyboard = keyboard.Listener(on_press=self.on_press) 
+        self.keyboard.start()
 
     def stop_listening(self):
         """ 
@@ -27,7 +32,9 @@ class Piano:
 
         :param self: Piano Object
         """
-        pass
+        # Checks if there's a Keyboard Thread alive
+        if (self.keyboard is not None):
+            self.keyboard.stop()
 
     def on_press(self, key) -> None:
         """
@@ -36,4 +43,9 @@ class Piano:
         :param self: Piano Object
         :param key: Pressed Key
         """
+        # Checks if last pressed key is the same as the new one
+        if (key != self.old_key): 
+            # Checks if Music is playing
+            # TODO: Check if the Track is Playing and act on it 
+            self.old_key = key 
         pass
