@@ -1,4 +1,5 @@
 import pygame
+import time 
 
 class MediaPlayer:
     """ 
@@ -47,7 +48,11 @@ class MediaPlayer:
         
         :param self: MediaPlayer Object
         """
-        pass
+        # Checks if the Track is loaded and has a valid position
+        if (self.track["name"] is not None):
+            self.mixer.music.play(start=0, fade_ms=int(self.delay))
+        else:
+            return 
 
     def stop(self) -> None:
         """
@@ -55,7 +60,17 @@ class MediaPlayer:
         
         :param self: MediaPlayer Object
         """
-        pass
+        # Save the current position in seconds
+        current_pos = self.mixer.music.get_pos()
+        if (self.track["name"] is not None):
+            # In case the music is still playing
+            if (current_pos != -1):
+                self.track["pos"] += (current_pos / 1000) + (self.delay / 1000) + 0.5
+            # Adds the chosen delay 
+            time.sleep(self.delay/1000)
+            self.mixer.music.fadeout(500)
+        else:
+            return 
 
     def resume(self) -> None:
         """
