@@ -1,3 +1,5 @@
+import pygame
+
 class MediaPlayer:
     """ 
     Media Player to Play and Control
@@ -12,7 +14,12 @@ class MediaPlayer:
         :param self: MediaPlayer Object
         :param delay: Desired Delay
         """
-        pass
+        # Defines the Desired Delay and Track Details
+        self.delay = delay
+        self.track = {"name": None, "pos": 0.0}
+        # Declares and Initializes the Mixer
+        self.mixer = pygame.mixer
+        self.mixer.init()
 
     def load_track(self, track: str) -> None:
         """
@@ -22,7 +29,8 @@ class MediaPlayer:
         :param track: Name of the Track
         :type track: str
         """
-        pass
+        self.track = {"name": self.resource_path(track), "pos": 0.0}
+        self.mixer.music.load(self.resource_path(track))
 
     def unload_track(self) -> None:
         """
@@ -30,7 +38,8 @@ class MediaPlayer:
         
         :param self: MediaPlayer Object
         """
-        pass
+        self.track = {"name": None, "pos": 0.0}
+        self.mixer.music.unload()
 
     def start(self) -> None:
         """
